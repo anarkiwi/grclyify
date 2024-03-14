@@ -3,6 +3,7 @@
 import argparse
 import importlib
 import inspect
+import os
 import sys
 from gnuradio import gr
 
@@ -10,8 +11,11 @@ if not len(sys.argv) > 1:
     print("need name of flow graph python module")
     raise ValueError
 
-fg_file = sys.argv[1]
+fg_file = os.path.realpath(sys.argv[1])
 fg_file = fg_file.replace(".py", "")
+fg_dir = os.path.dirname(fg_file)
+fg_file = os.path.basename(fg_file)
+sys.path.append(fg_dir)
 fg_module = importlib.import_module(fg_file)
 fg_class = None
 for o in vars(fg_module):

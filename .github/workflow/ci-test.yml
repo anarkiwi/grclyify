@@ -1,0 +1,23 @@
+---
+name: CI Test
+on: [push, pull_request]
+jobs:
+  ci-test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Get dependencies
+        run: |
+          sudo apt-get update && \
+            sudo apt-get install -y --no-install-recommends \
+            software-properties-common \
+            gnuradio-dev
+      - name:
+        run: |
+          pytest -vv .
