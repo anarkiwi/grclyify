@@ -4,7 +4,10 @@ import argparse
 import importlib
 import inspect
 import os
+import signal
 import sys
+import threading
+import time
 from gnuradio import gr
 
 if not len(sys.argv) > 1:
@@ -38,20 +41,30 @@ parser = argparse.ArgumentParser()
 parser.add_argument(
     "fg_file", type=str, default=None, help="Path to flow graph python file"
 )
+parser.add_argument(
+    "--runtime", type=float, default=None, help="Runtime limit, in seconds"
+)
 for set_method in set_methods:
     parser.add_argument(
         f"--{set_method}",
         dest=set_method,
     )
-options = {
+options = parser.parse_args()
+set_options = {
     option: val
-    for option, val in vars(parser.parse_args()).items()
+    for option, val in vars(options).items()
     if option.startswith("set_") and val is not None
 }
 
 
 class fgsub(fg_class):
-    OPTIONS = options
+    OPTIONS = set_options
+
+    def limit_runtime(self, runtime):
+        print(f"will exit in {runtime}s")
+        time.sleep(runtime)
+        print("exiting")
+        os.kill(os.getpid(), signal.SIGTERM)
 
     def start(self):
         for option, value in self.OPTIONS.items():
@@ -59,6 +72,11 @@ class fgsub(fg_class):
             option_type = type(getattr(self, option_name))
             print(f"overriding {option_name} to {value}")
             getattr(self, option)(option_type(value))
+        if options.runtime is not None:
+            self.limit_thread = threading.Thread(
+                target=self.limit_runtime, args=(options.runtime,)
+            )
+            self.limit_thread.start()
         super().start()
 
 

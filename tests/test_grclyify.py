@@ -12,6 +12,9 @@ class GrClyifyTestCase(unittest.TestCase):
         subprocess.check_call(["grcc", test_fg_grc])
         test_fg_py = test_fg_grc.replace(".grc", ".py")
         subprocess.check_call([grclify, test_fg_py, "--help"])
+        subprocess.check_call(
+            [grclify, test_fg_py, "--set_samp_rate", "64000", "--runtime", "10"]
+        )
 
 
 if __name__ == "__main__":  # pragma: no cover
