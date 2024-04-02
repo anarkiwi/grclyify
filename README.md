@@ -14,3 +14,14 @@ $ grclyify.py my_flowgraph.py --set_somevar=1000 --runtime=10
 ```
 $ grclyify.py my_flowgraph.py --help
 ```
+
+### randomize parameters
+
+Extra set options are generated automatically, and the value is python eval'd to obtain a result.
+
+```--randomize_interval <n>``` sets how often parameters are re-randomized.
+
+```
+$ grclyify.py my_flowgraph.py --rand_set_somevar="random.randint(0, 10)"
+$ grclyify.py my_flowgraph.py --rand_set_somevar="random.choice([1, 2, 3, 4])"
+```
