@@ -17,7 +17,14 @@ jobs:
           sudo apt-get update && \
             sudo apt-get install -y --no-install-recommends \
             software-properties-common \
-            gnuradio-dev
-      - name:
+            python3-pip
+      - name: install gnuradio
         run: |
-          pytest -vv .
+          sudo add-apt-repository ppa:gnuradio/gnuradio-releases && sudo apt-get update && \
+            sudo apt-get install -y --no-install-recommends gnuradio-dev python3-packaging
+      - name: black
+        run: |
+          pip3 install black && black . --check
+      - name: pytest
+        run: |
+          pip3 install pytest && pytest -vv .

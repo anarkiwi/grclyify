@@ -109,6 +109,8 @@ class fgsub(fg_class):
         self.running = False
         self.randomize_thread.join()
         super().stop()
+        print("exiting")
+        os.kill(os.getpid(), signal.SIGTERM)
 
     def start(self):
         self.running = True
