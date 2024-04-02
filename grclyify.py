@@ -106,11 +106,12 @@ class fgsub(fg_class):
                 print(f"{option_name} -> {random_val}")
 
     def stop(self):
-        self.running = False
-        self.randomize_thread.join()
-        super().stop()
-        print("exiting")
-        os.kill(os.getpid(), signal.SIGTERM)
+        if self.running:
+            self.running = False
+            self.randomize_thread.join()
+            print("exiting")
+            super().stop()
+            os.kill(os.getpid(), signal.SIGTERM)
 
     def start(self):
         self.running = True

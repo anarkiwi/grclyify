@@ -9,7 +9,7 @@ class GrClyifyTestCase(unittest.TestCase):
         test_src_dir = os.path.dirname(os.path.abspath(__file__))
         test_fg_grc = os.path.join(test_src_dir, "test_flow.grc")
         grclify = os.path.join(test_src_dir, "../grclyify.py")
-        subprocess.check_call(["grcc", test_fg_grc])
+        subprocess.check_call(["grcc", test_fg_grc, "-o", os.path.dirname(test_fg_grc)])
         test_fg_py = test_fg_grc.replace(".grc", ".py")
         subprocess.check_call([grclify, test_fg_py, "--help"])
         subprocess.check_call(
