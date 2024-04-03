@@ -91,7 +91,6 @@ class fgsub(fg_class):
     def limit_runtime(self, runtime):
         print(f"will exit in {runtime}s")
         time.sleep(runtime)
-        self.running = False
         print("exiting")
         os.kill(os.getpid(), signal.SIGTERM)
 
@@ -110,8 +109,7 @@ class fgsub(fg_class):
             self.running = False
             self.randomize_thread.join()
             print("exiting")
-            super().stop()
-            os.kill(os.getpid(), signal.SIGTERM)
+        super().stop()
 
     def start(self):
         self.running = True
