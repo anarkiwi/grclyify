@@ -88,11 +88,22 @@ class fgsub(fg_class):
         self.randomize_thread = None
         super().__init__(*args, **kwargs)
 
+    def stop_threads(self):
+        if self.running:
+            self.running = False
+            self.randomize_thread.join()
+            if self.limit_thread:
+                self.limit_thread.join()
+            print("exiting")
+
     def limit_runtime(self, runtime):
         print(f"will exit in {runtime}s")
-        time.sleep(runtime)
-        print("exiting")
-        os.kill(os.getpid(), signal.SIGTERM)
+        while runtime > 0 and self.running:
+            runtime -= 1.0
+            if runtime > 0:
+                time.sleep(1)
+        if self.running:
+            os.kill(os.getpid(), signal.SIGTERM)
 
     def randomize(self, interval):
         while self.running:
@@ -105,10 +116,7 @@ class fgsub(fg_class):
                 print(f"{option_name} -> {random_val}")
 
     def stop(self):
-        if self.running:
-            self.running = False
-            self.randomize_thread.join()
-            print("exiting")
+        self.stop_threads()
         super().stop()
 
     def start(self):
