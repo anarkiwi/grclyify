@@ -22,6 +22,7 @@ Block paths:
 
 2. Run grclyify --help to identify out to reset any of the variables defined in the graph.
 
+```
 $ ./grclyify.py cosine.py --help
 usage: grclyify.py [-h] [--runtime RUNTIME] [--randomize_interval RANDOMIZE_INTERVAL] [--set_freq SET_FREQ] [--rand_set_freq RAND_SET_FREQ] [--set_samp_rate SET_SAMP_RATE] [--rand_set_samp_rate RAND_SET_SAMP_RATE]
                    [--set_sig_freq SET_SIG_FREQ] [--rand_set_sig_freq RAND_SET_SIG_FREQ]
@@ -70,4 +71,3 @@ sig_freq -> 102
 sig_freq -> 146
 exiting
 ```
-
