@@ -18,8 +18,8 @@ Block paths:
 
 >>> Loading: cosine.grc
 >>> Generating: cosine.py
-
 ```
+
 2. Run grclyify --help to identify out to reset any of the variables defined in the graph.
 
 $ ./grclyify.py cosine.py --help
