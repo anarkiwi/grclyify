@@ -20,7 +20,7 @@ Block paths:
 >>> Generating: cosine.py
 ```
 
-2. Run grclyify --help to identify out to reset any of the variables defined in the graph.
+2. Run grclyify --help to identify the variables defined in the graph which can be controlled.
 
 ```
 $ ./grclyify.py cosine.py --help
@@ -44,7 +44,7 @@ options:
   --rand_set_sig_freq RAND_SET_SIG_FREQ
 ```
 
-3. Run grclyify to run the graph for 10s, setting freq to 101e6, and randomizing sig_freq to 10 to 200 every 2s.
+3. Run grclyify to run the graph for 10s, setting freq to 101e6, and randomizing sig_freq to 10 to 200 every 2s. You can randomize an enum with ```random.choice([0, 1, 2...])```. All variables identified for randomization, are re-randomized at the same interval.
 
 ```
 $ ./grclyify.py cosine.py --runtime 10 --set_freq=101e6 --rand_set_sig_freq="random.randint(10,200)" --randomize_interval=2
